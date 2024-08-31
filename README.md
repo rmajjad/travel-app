@@ -53,7 +53,7 @@ To get the project up and running:
 
 1. Clone the repository.
 2. Run `npm install` to install all required dependencies.
-3. Create an `.env` file with necessary environment variables like `USERNAME1` and `WEATHERBIT_KEY`.
+3. Create an `.env` file with necessary environment variables like `NAME`, `PIXABAY_KEY` and `WEATHER_KEY`.
 4. Modify server configuration files to use these environment variables.
 
 ## 🔧 Running the tests <a name = "tests"></a>
