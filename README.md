@@ -62,3 +62,11 @@ Run tests with:
 
 ```bash
 npm run test
+
+
+```bash
+npm run build
+
+
+
+
