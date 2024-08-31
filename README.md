@@ -64,8 +64,6 @@ Run tests with:
 npm run test
 
 
-```bash
-npm run build
 
 
 
