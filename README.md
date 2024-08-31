@@ -15,14 +15,14 @@
     <br> 
 </p>
 
-## 📝 Table of Contents
+##  Table of Contents
 
 - [About](#about)
 - [Getting Started](#getting_started)
 - [Deployment](#deployment)
 - [Authors](#authors)
 
-## 🧐 About <a name = "about"></a>
+##  About <a name = "about"></a>
 
 The Udacity Travel App project is a comprehensive web application designed to help users plan their travels. Below is an overview of the development process:
 
@@ -35,7 +35,7 @@ The Udacity Travel App project is a comprehensive web application designed to he
 - **Deployment:** Prepare and deploy the application to a production environment.
 - **Maintenance and Updates:** Regularly update the application based on user feedback and performance monitoring.
 
-## 🏁 Getting Started <a name = "getting_started"></a>
+##  Getting Started <a name = "getting_started"></a>
 
 Follow these instructions to set up the project on your local machine for development and testing.
 
@@ -56,7 +56,7 @@ To get the project up and running:
 3. Create an `.env` file with necessary environment variables like `NAME`, `PIXABAY_KEY` and `WEATHER_KEY`.
 4. Modify server configuration files to use these environment variables.
 
-## 🔧 Running the tests <a name = "tests"></a>
+##  Running the tests <a name = "tests"></a>
 
 Run tests with:
 
