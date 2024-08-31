@@ -1,13 +1,6 @@
 
 
-<div align="center">
 
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/menoo20/Travel-app-planner.svg)](https://github.com/menoo20/Travel-app-planner/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/menoo20/Travel-app-planner.svg)](https://github.com/menoo20/Travel-app-planner/pulls)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-
-</div>
 
 ---
 
