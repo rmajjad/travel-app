@@ -51,8 +51,8 @@ To get the project up and running:
 2. Run `npm install` to install all required dependencies.
 3. Run the server with `npm run start`.
 4. Run the client side with `npm run dev`.
-3. Create an `.env` file with necessary environment variables like `NAME`, `PIXABAY_KEY` and `WEATHER_KEY`.
-4. Modify server configuration files to use these environment variables.
+5. Create an `.env` file with necessary environment variables like `NAME`, `PIXABAY_KEY` and `WEATHER_KEY`.
+6. Modify server configuration files to use these environment variables.
 
 ### env file data
 - NAME = ramamajjad
