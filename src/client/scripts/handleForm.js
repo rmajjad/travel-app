@@ -42,7 +42,7 @@ const handleSubmit = async (event) => {
     }
     else if (location && !location.error) {
         city_error.style.display = "none";
-        const { name, lat, lng } = location;
+        const { city, lat, lng } = location;
 
         if(!inputCity.value) {
             city_error.innerHTML = `please enter a city name`;
@@ -65,8 +65,9 @@ const handleSubmit = async (event) => {
         }
         date_error.style.display = "none";
 
-        const pic = await getCityPic(name);
-        updateUI(RDays, name, pic.img, Weather);
+        const pic = await getCityPic(city);
+
+        updateUI(RDays, city, pic.img, Weather);
     }
 
 
@@ -84,10 +85,10 @@ const getCity = async () => {
 }
 
 
-const getCityPic = async (name) => {
+const getCityPic = async (city) => {
     const { data } = await axios.post("http://localhost:8000/getPic", {
-        name
-    })
+        city,
+    });
     
     return data;
 }

@@ -8,3 +8,5 @@ const getCityPic = async (name, key) =>{
 }
 
 module.exports = {getCityPic} 
+
+
