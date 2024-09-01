@@ -121,6 +121,7 @@ const updateUI = (Rdays, city, pic, weather) => {
         <image 
         src="${pic}" 
         alt="city image"
+        width="350"
         >
         `;
     document.querySelector(".flight_data").style.display = "block";
