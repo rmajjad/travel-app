@@ -1,4 +1,3 @@
-// getCityLoc.test.js
 const axios = require("axios");
 const { getCityLoc } = require("../getCityLoc.js");
 
@@ -9,10 +8,9 @@ describe("getCityLoc", () => {
 
     it("should return city data when a valid city name is provided", async () => {
         const mockCityData = {
-            geonames: [
+            postalCodes: [
                 {
-                    name: "London",
-                    countryName: "United Kingdom",
+                    placeName: "London",
                     lat: "51.50853",
                     lng: "-0.12574"
                 }
@@ -24,11 +22,15 @@ describe("getCityLoc", () => {
         const city = "London";
         const result = await getCityLoc(city, username);
 
-        expect(result).toEqual(mockCityData.geonames[0]);
+        expect(result).toEqual({
+            lat: "51.50853",
+            lng: "-0.12574",
+            city: "London"
+        });
     });
 
     it("should return error message when an invalid city name is provided", async () => {
-        const mockNoCityData = { geonames: [] };
+        const mockNoCityData = { postalCodes: [] };
 
         axios.get.mockResolvedValue({ data: mockNoCityData });
 
