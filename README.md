@@ -59,7 +59,8 @@ To get the project up and running:
 - WEATHER_KEY = b31fbdedc71341ee9812fec699ebef5d
 - PIXABAY_KEY = 45698558-08ae28d36524a88abb1e8f88f
 
-
+## node version:
+"node": "20.17.0"
 
 ##  Running the tests <a name = "tests"></a>
 
