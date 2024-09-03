@@ -1,40 +1,63 @@
-const MiniCssExtractPlugin = require("mini-css-extract-plugin"),
-    TerserPlugin = require("terser-webpack-plugin"),
-    path = require("path"),
-    common = require("./webpack.common.js");
-    const { merge } = require("webpack-merge"),
-    CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const webpack = require("webpack");
+path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// mini scss
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+//service workers
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
-module.exports = merge(common, {
-    mode: "production",
-    devtool: "hidden-source-map",
+module.exports = {
+    mode: 'production', 
+    entry: "./src/client/index.js",
+    optimization: {
+        minimizer: [new TerserPlugin({}), new CssMinimizerPlugin(),],
+    },
+    output: {
+        path: path.resolve(__dirname, 'dist'), 
+        filename: '[name].js',
+        libraryTarget: 'var',
+        library: 'Client'
+    },
+    devtool: 'source-map', 
     module: {
         rules: [
             {
-                test: /\.s[ac]ss$/i,
-                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ["@babel/preset-env"]
+                    }
+                }
             },
-        ]
-    },
-    output: {
-        filename: 'bundle.[contenthash].js',
-        path: path.resolve(__dirname, 'dist'),
-        libraryTarget: 'var',
-        library: 'Client',
-        clean: true,
-    },
-    optimization: {
-        minimize: true,
-        minimizer: [
-            // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
-            // `...`,
-            new CssMinimizerPlugin(),
-            new TerserPlugin()
-        ],
+            {
+                test: /\.scss$/,
+                use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
+            }
+        ] 
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            filename: 'style.[contenthash].css'
+        new HtmlWebpackPlugin({
+            template: './src/client/views/index.html',
+            filename: 'index.html',
+        }),
+        new CleanWebpackPlugin({
+            // Simulate the removal of files
+            dry: true,
+            // Write Logs to Console
+            verbose: true,
+            // Automatically remove all unused webpack assets on rebuild
+            cleanStaleWebpackAssets: true,
+            protectWebpackAssets: false
+        }),
+        new MiniCssExtractPlugin({ filename: "[name].css" }),
+        new WorkboxPlugin.GenerateSW({
+            clientsClaim: true,
+            skipWaiting: true,
         })
     ]
-})
+};

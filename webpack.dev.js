@@ -1,32 +1,50 @@
-const common = require("./webpack.common.js"),
-    { merge } = require("webpack-merge"),
-    CssMinimizerPlugin = require("css-minimizer-webpack-plugin"),
-    path = require("path");
+const webpack = require("webpack");
+const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-module.exports = merge(common, {
-    mode: "development",
-    devtool: "source-map",
+module.exports = {
+    mode: 'development', 
+    entry: "./src/client/index.js",
+    devtool: 'source-map',
+    stats: 'verbose',
+    output: {
+        path: path.resolve(__dirname, 'dist'), 
+        filename: '[name].js',
+        libraryTarget: 'var',
+        library: 'Client'
+    }, 
     module: {
         rules: [
             {
-                test: /\.s[ac]ss$/i,
-                use: ["style-loader", "css-loader", "sass-loader"]
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ["@babel/preset-env"]
+                    }
+                }
+            },
+            {
+                test: /\.scss$/,
+                use: [ 'style-loader', 'css-loader', 'sass-loader' ]
             }
-        ]
+        ] 
     },
-    output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-        libraryTarget: 'var',
-        library: 'Client',
-        clean: true,
-    },
-    optimization: {
-        minimizer: [
-            // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
-            // `...`,
-            new CssMinimizerPlugin(),
-        ],
-        minimize: true,
-    },
-})
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/client/views/index.html',
+            filename: 'index.html',
+        }),
+        new CleanWebpackPlugin({
+            // Simulate the removal of files
+            dry: true,
+            // Write Logs to Console
+            verbose: true,
+            // Automatically remove all unused webpack assets on rebuild
+            cleanStaleWebpackAssets: true,
+            protectWebpackAssets: false
+        }),
+    ]
+};
