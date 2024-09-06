@@ -2,13 +2,61 @@ import axios from "axios";
 import { getRDays } from "./RDays.js";
 
 const form = document.querySelector("form");
-const inputDate = document.querySelector("#date");  // Correctly select the date input
+const inputDate = document.querySelector("#date");
 const inputCity = document.querySelector("#city");
 
-const city_error = document.querySelector("#city_error");
-const date_error = document.querySelector("#date_error");
+const cityError = document.querySelector("#city_error");
+const dateError = document.querySelector("#date_error");
 
 
+
+
+
+const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    const Loc = await getCity();
+
+    if (!Loc.error) {
+        cityError.style.display = "none";
+        const { city, lat, lng } = Loc;
+
+        if(!inputCity.value) {
+            cityError.innerHTML = `please enter a city name`;
+            cityError.style.display = "block";
+        } 
+
+        if (!inputDate.value) {
+            dateError.innerHTML = `Please enter the date`;
+            dateError.style.display = "block";
+            return;
+        }
+        const RDays = getRDays(inputDate.value);
+        const Weather = await getWeather(lat, lng, RDays);
+        if (Weather.error) {
+            dateError.innerHTML = `${Weather.message}`;
+            dateError.style.display = "block";
+            return;
+        }
+        dateError.style.display = "none";
+
+        const pic = await getCityPic(city);
+
+        updateUI(pic.img, RDays,Weather ,city );
+
+    }else if (Loc.error) {
+        cityError.innerHTML = `wrong city name!`;
+        cityError.style.display = "block";
+        return false;
+    }
+
+    if (!validation()) {
+        return false;
+    }
+    
+
+
+}
 
 const getWeather = async (lat, lng, RDays) => {
     const { data } = await axios.post("http://localhost:8000/getWeather", {
@@ -22,56 +70,6 @@ const getWeather = async (lat, lng, RDays) => {
     });
 
     return data;
-}
-
-const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!validation()) {
-        return false;
-    }
-
-    const location = await getCity();
-
-    
-    if (location && location.error) {
-        
-        //handling the error coming from the server-side
-        city_error.innerHTML = `${location.message}`;
-        city_error.style.display = "block";
-        return
-    }
-    else if (location && !location.error) {
-        city_error.style.display = "none";
-        const { city, lat, lng } = location;
-
-        if(!inputCity.value) {
-            city_error.innerHTML = `please enter a city name`;
-            city_error.style.display = "block";
-            
-        } 
-
-
-        if (!inputDate.value) {
-            date_error.innerHTML = `Please enter the date`;
-            date_error.style.display = "block";
-            return;
-        }
-        const RDays = getRDays(inputDate.value);
-        const Weather = await getWeather(lat, lng, RDays);
-        if (Weather && Weather.error) {
-            date_error.innerHTML = `${Weather.message}`;
-            date_error.style.display = "block";
-            return;
-        }
-        date_error.style.display = "none";
-
-        const pic = await getCityPic(city);
-
-        updateUI(RDays, city, pic.img, Weather);
-    }
-
-
-
 }
 
 const getCity = async () => {
@@ -94,7 +92,7 @@ const getCityPic = async (city) => {
 }
 
 
-const updateUI = (Rdays, city, pic, weather) => {
+const updateUI = (pic, Rdays, weather, city) => {
     document.querySelector("#Rdays").innerHTML =
     Rdays != 1 
     ? `Your trip starts in ${Rdays} days`
@@ -128,29 +126,29 @@ const updateUI = (Rdays, city, pic, weather) => {
 };
 
 const validation = () => {
-    city_error.style.display = "none";
-    date_error.style.display = "none";
+    cityError.style.display = "none";
+    dateError.style.display = "none";
 
     if (!inputCity.value) {
-        city_error.innerHTML = `Please enter a city name`;
-        city_error.style.display = "block";
+        cityError.innerHTML = `Please enter a city name`;
+        cityError.style.display = "block";
         return false;
     }
 
-    if (!inputDate.value) {  // Use inputDate here
-        date_error.innerHTML = `Please enter the date`;
-        date_error.style.display = "block";
+    if (!inputDate.value) {  
+        dateError.innerHTML = `Please enter the date`;
+        dateError.style.display = "block";
         return false;
     }
 
-    if (getRDays(inputDate.value) < 0) {  // Use inputDate here
-        date_error.innerHTML = `Date cannot be in the past`;
-        date_error.style.display = "block";
+    if (getRDays(inputDate.value) < 0) {  
+        dateError.innerHTML = `Date cannot be in the past`;
+        dateError.style.display = "block";
         return false;
     }
 
-    city_error.style.display = "none";
-    date_error.style.display = "none";
+    cityError.style.display = "none";
+    dateError.style.display = "none";
     return true;
 }
 
@@ -159,6 +157,15 @@ const validation = () => {
 
 
 export { handleSubmit }
+
+
+
+
+
+/*  I apologize for the confusion; I had used this project solely for reference.
+Unfortunately, in my haste, I submitted the wrong project earlier. I hope this time my submission is correct.   */
+
+
 
 
 
